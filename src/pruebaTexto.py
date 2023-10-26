@@ -1,10 +1,27 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 import requests
 import database as db
 import datetime
 
 
+
 app = Flask(__name__)
+
+@app.route("/login/<params>/<param>" )
+def login(params,param):
+
+    print(params,param)
+    cursor = db.database.cursor()
+    query = ("SELECT nombreUsuario FROM pruebamercadolibre.usuario WHERE nombreUsuario = %s ")
+    cursor.execute(query, (params))
+    cursor.fetchone()
+    row = cursor.fetchone()
+    if row  == None:
+     return None
+    else:
+        print(row)
+        return redirect(url_for("/members/<params>"))
+
 
 
 @app.route("/members/<params>")
