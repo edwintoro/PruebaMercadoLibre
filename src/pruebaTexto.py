@@ -1,5 +1,6 @@
 from flask import Flask
 import requests
+import database as db
 
 
 app = Flask(__name__)
