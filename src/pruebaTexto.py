@@ -5,13 +5,16 @@ import requests
 app = Flask(__name__)
 
 
-@app.route("/members")
+@app.route("/members/<params>")
 
-def members():
+def members(params):
 
-    url = 'https://restcountries.com/v3.1/name/colombia?fullText=true'
+   
+    url = 'https://restcountries.com/v3.1/name/'+ params +'?fullText=true'
 
     col = requests.get(url)
+
+   
 
     return col.json()
 
