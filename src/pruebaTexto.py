@@ -64,7 +64,6 @@ def membersInt():
     probabilidad = request.json['probabilidad']
     
 
-
     print("content3")
 
     cursor = db.database.cursor()
