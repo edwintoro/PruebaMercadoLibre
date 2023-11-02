@@ -91,9 +91,10 @@ export default function App(){
 
       res=> res.json()
     ).then(
-        data=> {
-          SetData(data)
-          console.log("lista de riesgos",data)
+        datas=> {
+          SetData(datas)
+          console.log("lista de riesgos",datas)
+    
           
 
         }
@@ -110,6 +111,17 @@ export default function App(){
           "User Selected Value - ",
           event.target.value
       );
+  };
+
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleChanged = event => {
+    if (event.target.checked) {
+      console.log('✅ Checkbox is checked');
+    } else {
+      console.log('⛔️ Checkbox is NOT checked');
+    }
+    setIsSubscribed(current => !current);
   };
   return (
     <div>
@@ -251,7 +263,7 @@ export default function App(){
  
             <select onChange={onOptionChangeHandler}>
                 <option>por favor escoja una opcion</option>
-                {data.map((option, index) => {
+                {datas.map((option, index) => {
                     return (
                         <option key={index}>
                             {option}
@@ -260,6 +272,48 @@ export default function App(){
                 })}
             </select>
             <h3>usted a selecionado: {datas} </h3>
+            <h3>desea actulizarlo? </h3>
+            <div>
+      <label htmlFor="subscribe">
+        <input
+          type="checkbox"
+          value={isSubscribed}
+          onChange={handleChanged}
+          id="subscribe"
+          name="subscribe"
+        />
+        si
+      </label>
+
+      <hr />
+
+      <button disabled={!isSubscribed}>selecionado</button>
+      <div>
+      <form  onSubmit={handleSubmit(Allowance)}>
+     
+      <label htmlFor="nombreRiesgo">Nombre Riesgo</label>
+     <input
+     {...register("nombreRiesgo")}
+       name="nombreRiesgo"
+       type="text"
+       value={userInfo.nombreRiesgo}
+       onChange={handleChange}
+     />
+      <label htmlFor="pais">Pais</label>
+     <input
+     {...register("pais")}
+       name="pais"
+       type="text"
+       value={userInfo.pais}
+       onChange={handleChange}
+     />
+      <input type="submit" value="Submit" />
+     </form>
+     </div>
+     <div>
+   
+     </div>
+      </div>
         </center>
       </TabPanel>
       <TabPanel> <h1>Cual Riesgo desea  eliminar</h1></TabPanel>

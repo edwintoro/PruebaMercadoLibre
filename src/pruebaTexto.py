@@ -80,7 +80,7 @@ def membersInt():
 
 
 
-@app.route("/membersUp/<params>7<param>",methods=["POST"])   
+@app.route("/membersUp/<params>/<param>",methods=["POST"])   
 def membersUp(params, param):
     cursor = db.database.cursor()
     sql = "UPDATE pruebamercadolibre.riesgo SET nombreRiesgo = %s  AND idRiesgo = %s "
