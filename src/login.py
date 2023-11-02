@@ -22,10 +22,10 @@ def members(params,param):
     if row  == None:
      return None
     else:
-        print(row)
+        print("eeeeee",row)
         return redirect(url_for("/members/<params>"))
 
-
+ 
 
 
 
