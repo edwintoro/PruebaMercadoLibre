@@ -1,0 +1,236 @@
+import React, { useState, useEffect } from 'react'
+import { useForm } from "react-hook-form";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
+export default function App(){
+
+  const [data, SetData] = useState('colombia')
+  const [userInfo, setUserInfo] = useState({
+    nombreRiesgo: "",
+    pais: "",
+    nombre: "",
+    nombre_Completo: "",
+    codigo: "",
+    lista_Codigos: "",
+    divisa: "",
+    idioma: "",
+    ciudad_Capital: "",
+    codigo_llamada: "",
+    region: "",
+    sub_region: "",
+    impacto: "",
+    probabilidad: ""
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserInfo({ ...userInfo, [name]: value });
+  };
+
+
+  const nombre = userInfo.name;
+  const id = userInfo.phone
+  const url = `http://localhost:5000/login/${nombre}/${id}`;
+
+  console.log(url)
+  useEffect(()=> {
+
+    fetch(url).then(
+
+      res=> res.json()
+    ).then(
+        data=> {
+          SetData(data)
+          console.log("data",data)
+          
+
+        }
+    )
+  }, [])
+
+  
+  const { register, handleSubmit } = useForm();
+  const Allowance  = (userInfo) => {
+    console.log("formulario",userInfo);
+    
+    const url = `http://localhost:5000/membersIn`;
+    console.log(url)
+
+    fetch(url, {
+      method: 'POST',
+      headers:{ 'Content-Type': 'application/json',
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*" 
+    
+  },
+      body: JSON.stringify({
+        userInfo
+      })
+        
+     } ).then(
+
+      res=> res.json()
+    ).then(
+        data=> {
+          SetData(data)
+          console.log("data",data)
+          
+
+        }
+    )
+
+  } 
+  const [tabIndex, setTabIndex] = useState(0);
+  return (
+    <div>
+       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+      <TabList>
+        <Tab>Insertar</Tab>
+        <Tab>Actualizar</Tab>
+        <Tab>Borrar</Tab>
+        <Tab>Buscar</Tab>
+      </TabList>
+      <TabPanel>     
+       <form  onSubmit={handleSubmit(Allowance)}>
+       <div>
+      <label htmlFor="nombreRiesgo">Nombre Riesgo</label>
+     <input
+     {...register("nombreRiesgo")}
+       name="nombreRiesgo"
+       type="text"
+       value={userInfo.nombreRiesgo}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="pais">Pais</label>
+     <input
+     {...register("pais")}
+       name="pais"
+       type="text"
+       value={userInfo.pais}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="fechaModificacion">Fecha</label>
+     <input
+     {...register("fechaModificacion")}
+       name="fechaModificacion"
+       type="date"
+       value={userInfo.fechaModificacion}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="codigo">Codigo</label>
+     <input
+     {...register("codigo")}
+       name="codigo"
+       type="text"
+       value={userInfo.codigo}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="divisa">Divisa</label>
+     <input
+     {...register("divisa")}
+       name="divisa"
+       type="text"
+       value={userInfo.divisa}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="idioma">Idioma</label>
+     <input
+     {...register("idioma")}
+       name="idioma"
+       type="text"
+       value={userInfo.idioma}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="ciudad_Capital">Ciudad</label>
+     <input
+     {...register("ciudad_Capital")}
+       name="ciudad_Capital"
+       type="text"
+       value={userInfo.ciudad_Capital}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="codigo_llamada">Codigo LLamada</label>
+     <input
+     {...register("codigo_llamada")}
+       name="codigo_llamada"
+       type="text"
+       value={userInfo.codigo_llamada}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="region">Region</label>
+     <input
+     {...register("region")}
+       name="region"
+       type="text"
+       value={userInfo.region}
+       onChange={handleChange}
+     />
+     </div>
+     <div>
+    <label htmlFor="sub_region">Sub Region</label>
+     <input
+     {...register("sub_region")}
+       name="sub_region"
+       type="text"
+       value={userInfo.sub_region}
+       onChange={handleChange}
+     />
+    </div>
+    <div>
+     <label htmlFor="impacto">Impacto</label>
+     <input
+     {...register("impacto")}
+       name="impacto"
+       type="text"
+       value={userInfo.impacto}
+       onChange={handleChange}
+     />
+    </div>
+    <div>
+     <label htmlFor="probabilidad">Probabilidad</label>
+     <input
+      {...register("probabilidad")}
+       name="probabilidad"
+       type="text"
+       value={userInfo.probabilidad}
+       onChange={handleChange}
+     />
+     </div>
+     <input type="submit" value="Submit" />
+   </form></TabPanel>
+      <TabPanel> <h1>Cual Riesgo desea actualizar</h1></TabPanel>
+      <TabPanel> <h1>Cual Riesgo desea  eliminar</h1></TabPanel>
+      <TabPanel> <h1>Cual Riesgo desea buscar</h1></TabPanel>
+    </Tabs>
+       <h1>Insertar</h1>
+      <h1>{data.nombre}</h1>
+
+    
+  </div>
+  );
+};
+
+
+
+
+
+
+
+
