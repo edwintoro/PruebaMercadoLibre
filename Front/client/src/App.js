@@ -5,7 +5,7 @@ import 'react-tabs/style/react-tabs.css';
 
 export default function App(){
 
-  const [data, SetData] = useState('colombia')
+  const [data, SetData] = useState('')
   const [userInfo, setUserInfo] = useState({
     nombreRiesgo: "",
     pais: "",
@@ -81,7 +81,36 @@ export default function App(){
     )
 
   } 
+
+  const urlGetRiesgo = `http://localhost:5000/riesgoGet`;
+  const options = [];
+  console.log(urlGetRiesgo)
+ 
+
+    fetch(urlGetRiesgo).then(
+
+      res=> res.json()
+    ).then(
+        data=> {
+          SetData(data)
+          console.log("lista de riesgos",data)
+          
+
+        }
+    )
+  
+
   const [tabIndex, setTabIndex] = useState(0);
+  const [datas, setDatas] = useState(undefined);
+ 
+
+  const onOptionChangeHandler = (event) => {
+      setDatas(event.target.value);
+      console.log(
+          "User Selected Value - ",
+          event.target.value
+      );
+  };
   return (
     <div>
        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
@@ -215,11 +244,27 @@ export default function App(){
      </div>
      <input type="submit" value="Submit" />
    </form></TabPanel>
-      <TabPanel> <h1>Cual Riesgo desea actualizar</h1></TabPanel>
+      <TabPanel> <h1></h1>
+      <center>
+            <h1> Cual Riesgo desea actualizar</h1>
+           
+ 
+            <select onChange={onOptionChangeHandler}>
+                <option>por favor escoja una opcion</option>
+                {options.map((option, index) => {
+                    return (
+                        <option key={index}>
+                            {option}
+                        </option>
+                    );
+                })}
+            </select>
+            <h3>usted a selecionado: {datas} </h3>
+        </center>
+      </TabPanel>
       <TabPanel> <h1>Cual Riesgo desea  eliminar</h1></TabPanel>
       <TabPanel> <h1>Cual Riesgo desea buscar</h1></TabPanel>
     </Tabs>
-       <h1>Insertar</h1>
       <h1>{data.nombre}</h1>
 
     

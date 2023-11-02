@@ -78,6 +78,8 @@ def membersInt():
     return 'test'  # cursor.rowcount
 
 
+
+
 @app.route("/membersUp/<params>",methods=["POST"])   
 def membersUp(params):
     cursor = db.database.cursor()
@@ -100,7 +102,28 @@ def delete():
     cursor.close()
     return cursor.rowcount
 
-    
+@app.route("/riesgoGet" )
+def riesgoGet():
+
+
+    cursor = db.database.cursor()
+    query = ("SELECT idRiesgo, nombreRiesgo, pais FROM pruebamercadolibre.riesgo; ")
+   
+    print("paso")
+    cursor.execute(query)
+    print("paso1")
+    row = cursor.fetchall()
+    print("row",row)
+    if row  == None:
+     return ("not")
+    else:
+        value = {
+        "data": row
+        }
+        print("tttttt",value)
+        #token = create_access_token(identity= {"name":"Hello", "age":35} )
+        #print(token)
+        return  json.dumps(value)
     
 
   
