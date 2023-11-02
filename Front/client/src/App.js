@@ -251,7 +251,7 @@ export default function App(){
  
             <select onChange={onOptionChangeHandler}>
                 <option>por favor escoja una opcion</option>
-                {options.map((option, index) => {
+                {data.map((option, index) => {
                     return (
                         <option key={index}>
                             {option}

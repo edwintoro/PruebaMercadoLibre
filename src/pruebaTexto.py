@@ -80,23 +80,24 @@ def membersInt():
 
 
 
-@app.route("/membersUp/<params>",methods=["POST"])   
-def membersUp(params):
+@app.route("/membersUp/<params>7<param>",methods=["POST"])   
+def membersUp(params, param):
     cursor = db.database.cursor()
-    sql = "UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"
-    cursor.execute(sql)
+    sql = "UPDATE pruebamercadolibre.riesgo SET nombreRiesgo = %s  AND idRiesgo = %s "
+    tuple1 = (params, param)
+    cursor.execute(sql,tuple1)
     db.database.commit()
     print(cursor.rowcount, "registro actualizado")
     cursor.close()
     return cursor.rowcount
 
 
-@app.route("/membersDel", methods=["POST"])
-def delete():
+@app.route("/membersDel7<params>", methods=["POST"])
+def delete(params):
     cursor = db.database.cursor()
-    sql = """Delete from Laptop where id = %s"""
-    laptopId = 6
-    cursor.execute(sql,(laptopId,))
+    sql = """Delete from pruebamercadolibre.riesgo where idRiesgo = %s"""
+    updateId = params
+    cursor.execute(sql,updateId)
     db.database.commit()
     print(cursor.rowcount, "registro eliminado")
     cursor.close()
