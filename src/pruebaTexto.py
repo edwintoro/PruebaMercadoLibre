@@ -38,6 +38,8 @@ def login(params,param):
         print("tttttt",value)
         #token = create_access_token(identity= {"name":"Hello", "age":35} )
         #print(token)
+        cursor.close()
+   
         return  json.dumps(value)
 
 
@@ -92,7 +94,7 @@ def membersUp(params, param):
     return cursor.rowcount
 
 
-@app.route("/membersDel7<params>", methods=["POST"])
+@app.route("/membersDel<params>", methods=["POST"])
 def delete(params):
     cursor = db.database.cursor()
     sql = """Delete from pruebamercadolibre.riesgo where idRiesgo = %s"""
@@ -103,12 +105,14 @@ def delete(params):
     cursor.close()
     return cursor.rowcount
 
+
+
 @app.route("/riesgoGet" )
 def riesgoGet():
 
 
     cursor = db.database.cursor()
-    query = ("SELECT idRiesgo, nombreRiesgo, pais FROM pruebamercadolibre.riesgo; ")
+    query = ("SELECT FROM pruebamercadolibre.riesgo ")
    
     print("paso")
     cursor.execute(query)
@@ -124,10 +128,36 @@ def riesgoGet():
         print("tttttt",value)
         #token = create_access_token(identity= {"name":"Hello", "age":35} )
         #print(token)
+        cursor.close()
+   
         return  json.dumps(value)
     
 
-  
+@app.route("/riesgoGet/<param>" )
+def riesgoGetParam(param):
+
+
+    cursor = db.database.cursor()
+    query = ("SELECT FROM pruebamercadolibre.riesgo where nombreRiesgo LIKE %s ")
+    valor = (param)
+    print("paso222333")
+    cursor.execute(query,param)
+    print("paso7575757")
+    row = cursor.fetchall()
+    print("row",row)
+    if row  == None:
+     return ("not")
+    else:
+        value = {
+        "data": row
+        }
+        print("vvvvv",value)
+        #token = create_access_token(identity= {"name":"Hello", "age":35} )
+        #print(token)
+        cursor.close()
+   
+        return  json.dumps(value)
+    
     
    
 if __name__ == '__main__':

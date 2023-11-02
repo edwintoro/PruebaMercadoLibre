@@ -33,7 +33,7 @@ export default function App(){
   const url = `http://localhost:5000/login/${nombre}/${id}`;
 
   console.log(url)
-  useEffect(()=> {
+
 
     fetch(url).then(
 
@@ -46,7 +46,7 @@ export default function App(){
 
         }
     )
-  }, [])
+
 
   
   const { register, handleSubmit } = useForm();
@@ -94,6 +94,7 @@ export default function App(){
         datas=> {
           SetData(datas)
           console.log("lista de riesgos",datas)
+
     
           
 
@@ -102,7 +103,7 @@ export default function App(){
   
 
   const [tabIndex, setTabIndex] = useState(0);
-  const [datas, setDatas] = useState(undefined);
+  const [datas, setDatas] = useState([]);
  
 
   const onOptionChangeHandler = (event) => {
